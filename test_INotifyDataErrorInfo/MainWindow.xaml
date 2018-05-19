@@ -6,7 +6,25 @@
         xmlns:local="clr-namespace:test_INotifyDataErrorInfo"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <Label Content="{Binding People[0]}" Margin="10" FontSize="28">
+            <Label.ContentTemplate>
+                <DataTemplate>
+                    <StackPanel Background="AliceBlue" >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Name: " Width="100"/>
+                            <TextBlock Text="{Binding Name}" Width="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Age: " Width="100" />
+                            <TextBox Text="{Binding Age}" Width="100" Background="Transparent" BorderBrush="Transparent"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </Label.ContentTemplate>
+        </Label>
     </Grid>
 </Window>
