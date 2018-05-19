@@ -24,6 +24,8 @@ namespace test_INotifyDataErrorInfo
         private Action<object> _execute;
         private Func<object, bool> _canExecute;
 
+        #region ICommand
+
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -39,8 +41,14 @@ namespace test_INotifyDataErrorInfo
         {
             this._execute?.Invoke(parameter);
         }
+        #endregion    
 
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="execute"></param>
+        /// <param name="canExecute"></param>
         public DelegeteCommand(Action<object> execute, Func<object, bool> canExecute)
         {
             this._execute = execute ?? throw new ArgumentException("execute");
