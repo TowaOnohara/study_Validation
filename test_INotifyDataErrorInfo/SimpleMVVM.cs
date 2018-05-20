@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,9 +9,37 @@ using System.Windows.Input;
 
 namespace test_INotifyDataErrorInfo
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
+        #region INotifyDataErrorInfo
+
+        private Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
+
+        public bool HasErrors
+        {
+            get { return _errors.Values.Any(x => x != null); }
+        }
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public void ValidateProperty(string propertyName)
+        {
+            this.ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            // check parameter whether collect or not
+            if (string.IsNullOrWhiteSpace(propertyName)) return null;
+            if (!_errors.ContainsKey(propertyName)) return null;
+
+            // get value
+            this._errors.TryGetValue(propertyName, out List<string> errorInfo);
+            return errorInfo;
+        }
+
+        #endregion
+
         #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {
