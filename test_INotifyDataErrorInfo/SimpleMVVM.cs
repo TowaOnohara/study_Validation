@@ -9,6 +9,9 @@ using System.Windows.Input;
 
 namespace test_INotifyDataErrorInfo
 {
+    /// <summary>
+    /// ViewModel基本クラス
+    /// </summary>
     public class BaseViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         #region INotifyDataErrorInfo
@@ -48,6 +51,9 @@ namespace test_INotifyDataErrorInfo
         #endregion    
     }
 
+    /// <summary>
+    /// コマンド処理定義
+    /// </summary>
     public class DelegeteCommand : ICommand
     {
         private Action<object> _execute;
